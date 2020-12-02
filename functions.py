@@ -72,10 +72,10 @@ class DataStoreCRD:
             with open(datastore) as f:
                 # Make sure single process only allowed to access the file at a time.
                 # Locking file.
-               # portalocker.lock(f, portalocker.LOCK_EX)
+                portalocker.lock(f, portalocker.LOCK_EX)
                 data = json.load(f)
                 # Releasing the file lock.
-                #portalocker.lock(f, portalocker.LOCK_UN)
+                portalocker.lock(f, portalocker.LOCK_UN)
 
                 # Check if file size exceeded 1GB size.
                 prev_data_obj = json.dumps(data)
@@ -126,10 +126,10 @@ class DataStoreCRD:
         with open(datastore, 'w+') as f:
             # Make sure single process only allowed to access the file at a time.
             # Locking file.
-            #portalocker.lock(f, portalocker.LOCK_EX)
+            portalocker.lock(f, portalocker.LOCK_EX)
             json.dump(data, f)
             # Releasing the file lock.
-            #portalocker.lock(f, portalocker.LOCK_UN)
+            portalocker.lock(f, portalocker.LOCK_UN)
 
         return True, "Data created in DataStore."
 
@@ -144,10 +144,10 @@ class DataStoreCRD:
         with open(datastore) as f:
             # Make sure single process only allowed to access the file at a time.
             # Locking file.
-            #portalocker.lock(f, portalocker.LOCK_EX)
+            portalocker.lock(f, portalocker.LOCK_EX)
             data = json.load(f)
             # Releasing the file lock.
-            #portalocker.lock(f, portalocker.LOCK_UN)
+            portalocker.lock(f, portalocker.LOCK_UN)
 
         # Check for the input key available in data.
         if key not in data.keys():
@@ -188,9 +188,9 @@ class DataStoreCRD:
         with open(datastore, 'w+') as f:
             # Make sure single process only allowed to access the file at a time.
             # Locking file.
-            #portalocker.lock(f, portalocker.LOCK_EX)
+            portalocker.lock(f, portalocker.LOCK_EX)
             json.dump(message, f)
             # Releasing the file lock.
-            #portalocker.flock(f, portalocker.LOCK_UN)
+            portalocker.flock(f, portalocker.LOCK_UN)
 
         return True, "Data is deleted from the datastore."
